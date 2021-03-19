@@ -64,6 +64,8 @@ a()
 
 var express = require('express');
 var app = express();
+const server = http.createServer(app);
 app.get('/', function(req, res) {
   res.send('O bot está rodando agora ;)');
 });
+server.listen(process.env.PORT)
