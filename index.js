@@ -61,3 +61,9 @@ client.login(process.env.DISCORDTOKEN);
 }
 
 a()
+
+var express = require('express');
+var app = express();
+app.get('/', function(req, res) {
+  res.send('O bot está rodando agora ;)');
+});
