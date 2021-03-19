@@ -4,8 +4,8 @@ const request = require("request");
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 const baseurl = 'https://moodle.sertao.ifrs.edu.br';
-const username = 'moodle user';
-const password = 'moodle pass';
+const username = process.env.MOODLEUSER;
+const password = process.env.MOODLEPASS;
 
 const login = (baseurl,username,password)=> new Promise((re,err)=>{
     request(`${baseurl}/login/token.php?username=${username}&password=${password}&service=moodle_mobile_app`, function (error, response, body) {
@@ -57,7 +57,7 @@ client.on('message', async msg => {
   }
 })
  
-client.login('bot token');
+client.login(process.env.DISCORDTOKEN);
 }
 
 a()
