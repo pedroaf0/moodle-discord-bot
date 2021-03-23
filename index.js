@@ -22,7 +22,7 @@ const core_calendar_get_calendar_upcoming_view = (baseurl,token)=> new Promise((
 })
 function dateformat(int){
   var data = new Date(int)
-  date.setTime( date.getTime() + -3 * 60 * 60 * 1000 );
+  data.setTime( data.getTime() + -3 * 60 * 60 * 1000 );
   // pois a timezone do brasil é UTF-3
    var  dia  = data.getDate().toString(),
       diaF = (dia.length == 1) ? '0'+dia : dia,
