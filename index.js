@@ -71,6 +71,14 @@ const server = http.createServer(app);
 app.get('/', function(req, res) {
   res.send('O bot está rodando agora ;)');
 });
+// Add headers
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 app.get('/api', async function(req, res) {
   const { token, privatetoken } = await login(baseurl, username, password)
   const events = await core_calendar_get_calendar_upcoming_view(baseurl, token)
