@@ -79,13 +79,17 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', true);
+  next()
+});
+app.use(
   rateLimit({
-    windowMs: 1 * 60 * 60 * 1000, // 1 hour duration in milliseconds
-    max: 30,
-    message: "You exceeded 30 requests in 12 hour limit!",
+    windowMs: 1 * 60 * 60 * 1000, // 12 hour duration in milliseconds
+    max: 50,
+    message: "You exceeded 50 requests in 1 hour limit!",
     headers: true,
   })
-});
+);
+
 
 app.get('/api', async function(req, res) {
   const { token, privatetoken } = await login(baseurl, username, password)
