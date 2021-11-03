@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const request = require("request");
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+const rateLimit = require("express-rate-limit");
+
 
 const baseurl = 'https://moodle.sertao.ifrs.edu.br';
 const username = process.env.MOODLEUSER;
@@ -77,8 +79,14 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
+  rateLimit({
+    windowMs: 1 * 60 * 60 * 1000, // 1 hour duration in milliseconds
+    max: 30,
+    message: "You exceeded 30 requests in 12 hour limit!",
+    headers: true,
+  })
 });
+
 app.get('/api', async function(req, res) {
   const { token, privatetoken } = await login(baseurl, username, password)
   const events = await core_calendar_get_calendar_upcoming_view(baseurl, token)
